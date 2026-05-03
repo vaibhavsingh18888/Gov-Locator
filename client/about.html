@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About – GOV Locator</title>
+  <meta name="description" content="Learn about GOV Locator – India's Government Office Directory. Find offices, services, and navigate to any location across India." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════ NAVBAR ════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">🏛️</span>
+      <span class="brand-text">GOV<span class="brand-accent">Locator</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="offices.html" class="nav-link">Offices</a>
+      <a href="map.html" class="nav-link">Map</a>
+      <a href="about.html" class="nav-link active">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <span class="tt-icon" id="themeIcon">☀️</span>
+    </button>
+    <a href="login.html" class="nav-cta">Login</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="offices.html" onclick="closeMobile()">Offices</a>
+    <a href="map.html" onclick="closeMobile()">Map</a>
+    <a href="about.html" onclick="closeMobile()">About</a>
+    <a href="login.html" onclick="closeMobile()">Login</a>
+  </div>
+</header>
+
+<!-- ════════════════ ABOUT HERO ════════════════ -->
+<section class="ab-hero">
+  <div class="ab-hero-inner">
+    <div class="hp-hero-badge">
+      <span class="badge-dot"></span>
+      About GOVLocator
+    </div>
+    <h1 class="ab-hero-title">India's Government Office<br/>Directory</h1>
+    <p class="ab-hero-subtitle">
+      GOVLocator helps citizens across India quickly find government offices,
+      access contact information, check working hours, and get directions — all in one place.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════ STATS ════════════════ -->
+<section class="ab-stats">
+  <div class="container">
+    <div class="ab-stats-grid">
+      <div class="ab-stat">
+        <div class="ab-stat-icon">🏛️</div>
+        <div class="ab-stat-num" id="statOffices">34+</div>
+        <div class="ab-stat-label">Offices Listed</div>
+      </div>
+      <div class="ab-stat">
+        <div class="ab-stat-icon">📂</div>
+        <div class="ab-stat-num" id="statCategories">15</div>
+        <div class="ab-stat-label">Categories</div>
+      </div>
+      <div class="ab-stat">
+        <div class="ab-stat-icon">🏙️</div>
+        <div class="ab-stat-num" id="statCities">7+</div>
+        <div class="ab-stat-label">Cities Covered</div>
+      </div>
+      <div class="ab-stat">
+        <div class="ab-stat-icon">✅</div>
+        <div class="ab-stat-num" id="statFree">Free</div>
+        <div class="ab-stat-label">Always Free</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ WHAT IS GOVLOCATOR ════════════════ -->
+<section class="ab-what">
+  <div class="container">
+    <div class="ab-what-grid">
+      <div class="ab-what-text">
+        <h2 class="ab-what-title">What is GOVLocator?</h2>
+        <p><strong>GOVLocator</strong> is a free, citizen-focused web application designed to make it easy for people across India to locate and access government offices — from district collectors and municipal corporations to courts, revenue offices, and more.</p>
+        <p>Finding a government office can often be confusing. Office addresses change, phone numbers are hard to find, and working hours aren't always consistent. GOVLocator solves this by maintaining an up-to-date, searchable directory tailored for every citizen — accessible from any device, anywhere.</p>
+        <p>Whether you need to visit a collector's office, register a vehicle at an RTO, or file for a passport, GOV Locator shows you exactly where to go, how to get there, and when to visit.</p>
+      </div>
+      <div class="ab-what-cards">
+        <div class="ab-mini-card">
+          <div class="ab-mini-icon" style="background:#eef0ff;color:#4f5bed;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <h4>Smart Search</h4>
+            <p>Search by name, city, category, or services.</p>
+          </div>
+        </div>
+        <div class="ab-mini-card">
+          <div class="ab-mini-icon" style="background:#eef0ff;color:#4f5bed;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          </div>
+          <div>
+            <h4>Live Map</h4>
+            <p>Google Maps with real-time navigation support.</p>
+          </div>
+        </div>
+        <div class="ab-mini-card">
+          <div class="ab-mini-icon" style="background:#e8f5e9;color:#4caf50;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4>Directions</h4>
+            <p>One-click navigation from any location.</p>
+          </div>
+        </div>
+        <div class="ab-mini-card">
+          <div class="ab-mini-icon" style="background:#eef0ff;color:#4f5bed;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4>For Everyone</h4>
+            <p>Built for all Indian citizens, completely free.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ HOW IT WORKS ════════════════ -->
+<section class="ab-how">
+  <div class="container">
+    <h2 class="hp-section-title">How It Works</h2>
+    <p class="hp-section-subtitle">Find any government office in 3 simple steps</p>
+    <div class="ab-how-grid">
+      <div class="ab-how-step">
+        <div class="ab-how-step-num">STEP 01</div>
+        <div class="ab-how-icon" style="background:#eef0ff;color:#4f5bed;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Search or Browse</h3>
+        <p>Use the search bar to find offices by name, city, or category — or filter by category with a single click.</p>
+      </div>
+      <div class="ab-how-step">
+        <div class="ab-how-step-num">STEP 02</div>
+        <div class="ab-how-icon" style="background:#fce4ec;color:#e91e63;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>View on Map</h3>
+        <p>Scroll the interactive Google Maps view to see all offices marked on the map, color-coded by category.</p>
+      </div>
+      <div class="ab-how-step">
+        <div class="ab-how-step-num">STEP 03</div>
+        <div class="ab-how-icon" style="background:#e8f5e9;color:#4caf50;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Get Directions</h3>
+        <p>Tap "Get Directions" to open Google Maps and start navigation directly to the office.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ MISSION CARDS ════════════════ -->
+<section class="about-section" id="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-badge">Our Values</div>
+        <h2 class="section-title">One Platform for All<br/><span class="gradient-text">Government Services</span></h2>
+        <p class="about-desc">
+          GOV Locator is a citizen-centric digital initiative that puts all government administrative offices on an interactive map, so citizens can quickly find addresses, timings, and services without confusion.
+        </p>
+        <ul class="about-features">
+          <li><span class="feat-icon">✅</span> Verified office data</li>
+          <li><span class="feat-icon">✅</span> Interactive map with one-click directions</li>
+          <li><span class="feat-icon">✅</span> Filter by office type or city</li>
+          <li><span class="feat-icon">✅</span> Working hours & services at a glance</li>
+          <li><span class="feat-icon">✅</span> Supports Digital India &amp; e-Governance</li>
+        </ul>
+      </div>
+      <div class="about-cards">
+        <div class="about-card ac-blue">
+          <div class="ac-icon">🎯</div>
+          <h3>Our Mission</h3>
+          <p>Reduce citizen confusion and save time by making government office discovery effortless.</p>
+        </div>
+        <div class="about-card ac-green">
+          <div class="ac-icon">🌐</div>
+          <h3>Digital India</h3>
+          <p>Supporting the Digital India initiative by bridging the information gap between citizens and government.</p>
+        </div>
+        <div class="about-card ac-orange">
+          <div class="ac-icon">🔒</div>
+          <h3>Trusted Data</h3>
+          <p>All office information is curated from official government sources and updated regularly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">🏛️ GOV<span>Locator</span></div>
+        <p>A Digital India initiative to help citizens find government offices quickly and easily.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="map.html">Find Offices</a>
+        <a href="about.html">About</a>
+        <a href="suggest.html">Suggest Office</a>
+      </div>
+      <div class="footer-links">
+        <h4>Office Types</h4>
+        <a href="map.html?cat=collectorate">District Collector</a>
+        <a href="map.html?cat=rto">RTO</a>
+        <a href="map.html?cat=passport">Passport Office</a>
+        <a href="map.html?cat=municipal">Municipal Corp.</a>
+      </div>
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+        <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+        <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG App</a>
+        <a href="https://parivahan.gov.in" target="_blank" rel="noopener">Parivahan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GOV Locator. Made with ❤️ for Indian Citizens &middot; Digital India Initiative</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

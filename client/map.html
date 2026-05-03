@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map – GOV Locator</title>
+  <meta name="description" content="Interactive map to find government offices – District Collector, RTO, Municipal Corporation, Tehsil, Passport Office and more." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Google Maps API -->
+  <script>
+    window.GOOGLE_MAPS_LOADED = false;
+    window.pendingMapsInit = [];
+    function onGoogleMapsLoaded() {
+      window.GOOGLE_MAPS_LOADED = true;
+      window.pendingMapsInit.forEach(fn => fn());
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxy_LtS2Bi8JG16IfJ_s2cDTeTRtMFe8&libraries=places&callback=onGoogleMapsLoaded">
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════ NAVBAR ════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">🏛️</span>
+      <span class="brand-text">GOV<span class="brand-accent">Locator</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="map.html" class="nav-link active">Map</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <span class="tt-icon" id="themeIcon">☀️</span>
+    </button>
+    <a href="login.html" class="nav-cta">Login</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="map.html" onclick="closeMobile()">Map</a>
+    <a href="about.html" onclick="closeMobile()">About</a>
+    <a href="login.html" onclick="closeMobile()">Login</a>
+  </div>
+</header>
+
+<!-- ════════════════ MAP SECTION (full-page) ════════════════ -->
+<section class="map-section map-page-full" id="map-section">
+  <div class="map-layout">
+
+    <!-- ── LEFT SIDEBAR ── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">Find Offices</h2>
+        <span class="result-count" id="resultCount">Loading…</span>
+      </div>
+
+      <!-- Search bar -->
+      <div class="search-wrap">
+        <span class="s-icon">🔍</span>
+        <input
+          type="text"
+          id="sideSearch"
+          class="side-search"
+          placeholder="Search by name, city, service…"
+          autocomplete="off"
+          aria-label="Search offices"
+        />
+        <button class="clear-btn" id="clearSearch" title="Clear" onclick="clearSearch()">✕</button>
+      </div>
+
+      <!-- City filter -->
+      <div class="city-wrap">
+        <select id="cityFilter" class="city-select" onchange="applyFilters()" aria-label="Filter by city">
+          <option value="">All Cities</option>
+        </select>
+      </div>
+
+      <!-- Category filters -->
+      <div class="cat-section">
+        <p class="cat-label">Filter by Category</p>
+        <div class="cat-grid" id="catGrid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Office list -->
+      <div class="office-list" id="officeList" role="list">
+        <div class="list-loading" id="listLoader">
+          <div class="loader-spinner"></div>
+          <p>Loading offices…</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── MAP CANVAS ── -->
+    <main class="map-container">
+      <div id="map"></div>
+
+      <!-- Map overlay controls -->
+      <div class="map-overlay-top">
+        <button class="map-ctrl-btn" id="locateMe" title="My Location" onclick="locateMe()">📍</button>
+        <button class="map-ctrl-btn" id="resetMap" title="Reset View" onclick="resetMapView()">🔁</button>
+      </div>
+
+      <!-- Map loading overlay -->
+      <div class="map-loading" id="mapLoading">
+        <div class="loader-spinner large"></div>
+        <p>Loading Map…</p>
+      </div>
+    </main>
+
+  </div>
+</section>
+
+<!-- ════════════════ OFFICE DETAIL PANEL ════════════════ -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)"></div>
+<aside class="detail-panel" id="detailPanel" role="dialog" aria-label="Office Details">
+  <div class="detail-inner" id="detailContent">
+    <!-- Filled dynamically -->
+  </div>
+</aside>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

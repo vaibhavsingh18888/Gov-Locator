@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GOV Locator – Find Government Offices Near You</title>
+  <meta name="description" content="Easily find government offices near you – District Collector, RTO, Municipal Corporation, Tehsil, Passport Office and more. Interactive map-based locator supporting Digital India." />
+  <meta name="keywords" content="government office locator, RTO, collector office, tehsil, municipal corporation, passport office, India" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="home-page">
+
+<!-- ════════════════ NAVBAR ════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">🏛️</span>
+      <span class="brand-text">GOV<span class="brand-accent">Locator</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="offices.html" class="nav-link">Offices</a>
+      <a href="map.html" class="nav-link">Map</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <span class="tt-icon" id="themeIcon">☀️</span>
+    </button>
+    <a href="login.html" class="nav-cta">Login</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="offices.html" onclick="closeMobile()">Offices</a>
+    <a href="map.html" onclick="closeMobile()">Map</a>
+    <a href="about.html" onclick="closeMobile()">About</a>
+    <a href="login.html" onclick="closeMobile()">Login</a>
+  </div>
+</header>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hp-hero" id="hero">
+  <div class="hp-hero-inner">
+    <div class="hp-hero-badge">
+      <span class="badge-dot"></span>
+      Digital India Initiative
+    </div>
+    <h1 class="hp-hero-title">
+      Find Government Offices<br/>
+      <span>Near You Instantly</span>
+    </h1>
+    <p class="hp-hero-subtitle">
+      Find government offices, services, and navigate to any location across India.
+    </p>
+    <div class="hp-search-wrap">
+      <div class="hp-search-box">
+        <span class="hp-search-icon">🔍</span>
+        <input type="text" id="heroSearch" class="hp-search-input" placeholder="Search for offices, categories, or locations…" autocomplete="off" aria-label="Search government offices" />
+      </div>
+    </div>
+    <div class="hp-hero-actions">
+      <a href="offices.html" class="hp-btn hp-btn-white">Browse All Offices</a>
+      <a href="map.html" class="hp-btn hp-btn-red">📍 View on Map</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ BROWSE BY CATEGORY ════════════════ -->
+<section class="hp-categories" id="categories-section">
+  <div class="container">
+    <h2 class="hp-section-title">Browse by Category</h2>
+    <p class="hp-section-subtitle">Find the right government office for your needs</p>
+    <div class="hp-cat-grid">
+      <a href="map.html?cat=police" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#eef0ff;color:#4f5bed;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="hp-cat-label">Police</span>
+      </a>
+      <a href="map.html?cat=collectorate" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#fff3e6;color:#f97316;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        </div>
+        <span class="hp-cat-label">Revenue</span>
+      </a>
+      <a href="map.html?cat=health" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#fce4ec;color:#e91e63;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <span class="hp-cat-label">Health</span>
+      </a>
+      <a href="map.html?cat=land" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#e8f5e9;color:#4caf50;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <span class="hp-cat-label">Education</span>
+      </a>
+      <a href="map.html?cat=court" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#fce4ec;color:#e91e63;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <span class="hp-cat-label">Court</span>
+      </a>
+      <a href="map.html?cat=municipal" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#e8f5e9;color:#4caf50;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+        </div>
+        <span class="hp-cat-label">Municipal</span>
+      </a>
+      <a href="map.html?cat=rto" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#e0f7fa;color:#00bcd4;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <span class="hp-cat-label">RTO</span>
+      </a>
+      <a href="map.html?cat=collectorate" class="hp-cat-card">
+        <div class="hp-cat-icon" style="background:#fce4ec;color:#e91e63;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <span class="hp-cat-label">Collector Office</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FEATURES ROW ════════════════ -->
+<section class="hp-features" id="features-section">
+  <div class="container">
+    <div class="hp-features-grid">
+      <div class="hp-feature-card">
+        <div class="hp-feature-icon" style="background:#eef0ff;color:#4f5bed;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Easy Search</h3>
+        <p>Search for government offices by name, location, category, or services effortlessly.</p>
+      </div>
+      <div class="hp-feature-card">
+        <div class="hp-feature-icon" style="background:#fce4ec;color:#e91e63;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        </div>
+        <h3>Navigate Easily</h3>
+        <p>Get one-click directions to any government office with integrated Google Maps.</p>
+      </div>
+      <div class="hp-feature-card">
+        <div class="hp-feature-icon" style="background:#e8f5e9;color:#4caf50;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Complete Information</h3>
+        <p>Access phone numbers, working hours, services, and contact for all government offices.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ CTA / SUGGEST SECTION ════════════════ -->
+<section class="hp-cta-section">
+  <div class="container">
+    <div class="hp-cta-inner">
+      <div class="hp-cta-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <h2>Know an office that's not listed?</h2>
+      <p>Help us improve this directory by suggesting new government offices.</p>
+      <a href="suggest.html" class="hp-cta-btn">Suggest an Office</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">🏛️ GOV<span>Locator</span></div>
+        <p>A Digital India initiative to help citizens find government offices quickly and easily.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="map.html">Find Offices</a>
+        <a href="about.html">About</a>
+        <a href="suggest.html">Suggest Office</a>
+      </div>
+      <div class="footer-links">
+        <h4>Office Types</h4>
+        <a href="map.html?cat=collectorate">District Collector</a>
+        <a href="map.html?cat=rto">RTO</a>
+        <a href="map.html?cat=passport">Passport Office</a>
+        <a href="map.html?cat=municipal">Municipal Corp.</a>
+      </div>
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+        <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+        <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG App</a>
+        <a href="https://parivahan.gov.in" target="_blank" rel="noopener">Parivahan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GOV Locator. Made with ❤️ for Indian Citizens &middot; Digital India Initiative</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

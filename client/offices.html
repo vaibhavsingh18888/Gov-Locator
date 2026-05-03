@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Offices – GOV Locator</title>
+  <meta name="description" content="Browse all government offices across India. Filter by state, city, and office type to find the office you need." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════ NAVBAR ════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">🏛️</span>
+      <span class="brand-text">GOV<span class="brand-accent">Locator</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="offices.html" class="nav-link active">Offices</a>
+      <a href="map.html" class="nav-link">Map</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <span class="tt-icon" id="themeIcon">☀️</span>
+    </button>
+    <a href="login.html" class="nav-cta">Login</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="offices.html" onclick="closeMobile()">Offices</a>
+    <a href="map.html" onclick="closeMobile()">Map</a>
+    <a href="about.html" onclick="closeMobile()">About</a>
+    <a href="login.html" onclick="closeMobile()">Login</a>
+  </div>
+</header>
+
+<!-- ════════════════ PAGE HERO ════════════════ -->
+<section class="off-hero">
+  <div class="off-hero-inner">
+    <h1 class="off-hero-title">Browse All Offices</h1>
+    <p class="off-hero-subtitle">Explore government offices across India — filter by state, city, or office type to find exactly what you need.</p>
+  </div>
+</section>
+
+<!-- ════════════════ FILTERS ════════════════ -->
+<section class="off-filters-section">
+  <div class="container">
+    <div class="off-filters-bar">
+      <div class="off-filter-group">
+        <label class="off-filter-label" for="stateFilter">State</label>
+        <select id="stateFilter" class="off-filter-select">
+          <option value="">All States</option>
+        </select>
+      </div>
+      <div class="off-filter-group">
+        <label class="off-filter-label" for="cityFilter">City</label>
+        <select id="cityFilter" class="off-filter-select">
+          <option value="">All Cities</option>
+        </select>
+      </div>
+      <div class="off-filter-group">
+        <label class="off-filter-label" for="typeFilter">Office Type</label>
+        <select id="typeFilter" class="off-filter-select">
+          <option value="">All Office Types</option>
+        </select>
+      </div>
+      <div class="off-filter-group off-filter-search-group">
+        <label class="off-filter-label" for="searchFilter">Search</label>
+        <div class="off-search-wrap">
+          <span class="off-search-icon">🔍</span>
+          <input type="text" id="searchFilter" class="off-filter-input" placeholder="Search offices…" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+    <div class="off-results-bar">
+      <span class="off-results-count" id="offResultsCount">Showing 0 results</span>
+      <button class="off-clear-btn" id="offClearFilters">Clear All Filters</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ OFFICE CARDS GRID ════════════════ -->
+<section class="off-grid-section">
+  <div class="container">
+    <div class="off-cards-grid" id="offCardsGrid">
+      <!-- Cards injected by JS -->
+      <div class="off-loading" id="offLoading">
+        <div class="loader-spinner large"></div>
+        <p>Loading offices…</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">🏛️ GOV<span>Locator</span></div>
+        <p>A Digital India initiative to help citizens find government offices quickly and easily.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="offices.html">Browse Offices</a>
+        <a href="map.html">Map View</a>
+        <a href="about.html">About</a>
+        <a href="suggest.html">Suggest Office</a>
+      </div>
+      <div class="footer-links">
+        <h4>Office Types</h4>
+        <a href="offices.html?type=District Collector">District Collector</a>
+        <a href="offices.html?type=RTO">RTO</a>
+        <a href="offices.html?type=Passport Office">Passport Office</a>
+        <a href="offices.html?type=Municipal Corporation">Municipal Corp.</a>
+      </div>
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+        <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+        <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG App</a>
+        <a href="https://parivahan.gov.in" target="_blank" rel="noopener">Parivahan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GOV Locator. Made with ❤️ for Indian Citizens &middot; Digital India Initiative</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+/* =============================================================================
+   OFFICES PAGE — offices.js
+   ============================================================================= */
+(function() {
+  "use strict";
+
+  const API_BASE = "/api";
+  let allOffices = [];
+  let filteredOffices = [];
+
+  // Category → color mapping for card accents
+  const TYPE_COLORS = {
+    "District Collector":    { bg: "#fff3e6", fg: "#d97706", accent: "#f97316" },
+    "Tehsil Office":         { bg: "#eef0ff", fg: "#4f5bed", accent: "#4f5bed" },
+    "RTO":                   { bg: "#e0f7fa", fg: "#0891b2", accent: "#06b6d4" },
+    "Municipal Corporation": { bg: "#e8f5e9", fg: "#16a34a", accent: "#22c55e" },
+    "Block Office":          { bg: "#fef3c7", fg: "#ca8a04", accent: "#eab308" },
+    "Police Station":        { bg: "#eef0ff", fg: "#4f5bed", accent: "#6366f1" },
+    "Passport Office":       { bg: "#fce4ec", fg: "#e91e63", accent: "#ec4899" },
+    "Court":                 { bg: "#fce4ec", fg: "#be123c", accent: "#e11d48" },
+    "Income Tax":            { bg: "#fff3e6", fg: "#d97706", accent: "#f59e0b" },
+    "Post Office":           { bg: "#fef3c7", fg: "#ca8a04", accent: "#eab308" },
+    "Labour Office":         { bg: "#e0f7fa", fg: "#0891b2", accent: "#06b6d4" },
+    "Food & Civil Supplies": { bg: "#e8f5e9", fg: "#16a34a", accent: "#22c55e" },
+    "Electricity Board":     { bg: "#fff3e6", fg: "#d97706", accent: "#f97316" },
+    "Health Department":     { bg: "#fce4ec", fg: "#e91e63", accent: "#e91e63" },
+    "Land Records":          { bg: "#e8f5e9", fg: "#16a34a", accent: "#22c55e" },
+  };
+
+  const DEFAULT_COLOR = { bg: "#eef0ff", fg: "#4f5bed", accent: "#4f5bed" };
+
+  // DOM
+  const stateFilter   = document.getElementById("stateFilter");
+  const cityFilter    = document.getElementById("cityFilter");
+  const typeFilter    = document.getElementById("typeFilter");
+  const searchFilter  = document.getElementById("searchFilter");
+  const cardsGrid     = document.getElementById("offCardsGrid");
+  const resultsCount  = document.getElementById("offResultsCount");
+  const clearBtn      = document.getElementById("offClearFilters");
+  const loading       = document.getElementById("offLoading");
+
+  // Init
+  loadOffices();
+
+  // Read URL params
+  const params = new URLSearchParams(window.location.search);
+
+  // Events
+  stateFilter.addEventListener("change", () => {
+    populateCities(); // Re-populate cities based on state
+    applyFilters();
+  });
+  cityFilter.addEventListener("change", applyFilters);
+  typeFilter.addEventListener("change", applyFilters);
+  searchFilter.addEventListener("input", debounce(applyFilters, 250));
+  clearBtn.addEventListener("click", clearFilters);
+
+  async function loadOffices() {
+    try {
+      const res = await fetch(`${API_BASE}/offices`);
+      const data = await res.json();
+      if (data.success) {
+        allOffices = data.data;
+      } else {
+        throw new Error("API returned failure");
+      }
+    } catch {
+      // Use fallback if defined
+      if (typeof FALLBACK_OFFICES !== "undefined") {
+        allOffices = FALLBACK_OFFICES;
+      }
+    }
+
+    populateStates();
+    populateCities();
+    populateTypes();
+
+    // Apply URL params
+    if (params.get("state")) {
+      stateFilter.value = params.get("state");
+      populateCities();
+    }
+    if (params.get("city")) cityFilter.value = params.get("city");
+    if (params.get("type")) typeFilter.value = params.get("type");
+    if (params.get("q"))    searchFilter.value = params.get("q");
+
+    applyFilters();
+  }
+
+  function populateStates() {
+    const states = [...new Set(allOffices.map(o => o.state))].sort();
+    stateFilter.innerHTML = `<option value="">All States</option>`;
+    states.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s;
+      stateFilter.appendChild(opt);
+    });
+  }
+
+  function populateCities() {
+    const selectedState = stateFilter.value;
+    const offices = selectedState
+      ? allOffices.filter(o => o.state === selectedState)
+      : allOffices;
+    const cities = [...new Set(offices.map(o => o.city))].sort();
+    const prevCity = cityFilter.value;
+    cityFilter.innerHTML = `<option value="">All Cities</option>`;
+    cities.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      cityFilter.appendChild(opt);
+    });
+    // Restore previous city if still available
+    if (cities.includes(prevCity)) cityFilter.value = prevCity;
+  }
+
+  function populateTypes() {
+    const types = [...new Set(allOffices.map(o => o.type))].sort();
+    typeFilter.innerHTML = `<option value="">All Office Types</option>`;
+    types.forEach(t => {
+      const opt = document.createElement("option");
+      opt.value = t;
+      opt.textContent = t;
+      typeFilter.appendChild(opt);
+    });
+  }
+
+  function applyFilters() {
+    const stateVal  = stateFilter.value;
+    const cityVal   = cityFilter.value;
+    const typeVal   = typeFilter.value;
+    const searchVal = searchFilter.value.trim().toLowerCase();
+
+    filteredOffices = allOffices.filter(o => {
+      const matchState  = !stateVal || o.state === stateVal;
+      const matchCity   = !cityVal  || o.city  === cityVal;
+      const matchType   = !typeVal  || o.type  === typeVal;
+      const matchSearch = !searchVal ||
+        o.name.toLowerCase().includes(searchVal) ||
+        o.address.toLowerCase().includes(searchVal) ||
+        o.city.toLowerCase().includes(searchVal) ||
+        o.type.toLowerCase().includes(searchVal) ||
+        (o.services && o.services.some(s => s.toLowerCase().includes(searchVal)));
+
+      return matchState && matchCity && matchType && matchSearch;
+    });
+
+    renderCards(filteredOffices);
+    resultsCount.textContent = `Showing ${filteredOffices.length} result${filteredOffices.length !== 1 ? "s" : ""}`;
+  }
+
+  function clearFilters() {
+    stateFilter.value = "";
+    cityFilter.value  = "";
+    typeFilter.value  = "";
+    searchFilter.value = "";
+    populateCities();
+    applyFilters();
+  }
+
+  function renderCards(offices) {
+    if (loading) loading.style.display = "none";
+    cardsGrid.innerHTML = "";
+
+    if (!offices.length) {
+      cardsGrid.innerHTML = `
+        <div class="off-no-results">
+          <div class="off-no-icon">🔍</div>
+          <h3>No offices found</h3>
+          <p>Try adjusting your filters or search query.</p>
+        </div>`;
+      return;
+    }
+
+    offices.forEach(office => {
+      const colors = TYPE_COLORS[office.type] || DEFAULT_COLOR;
+      const initials = getInitials(office.name);
+      const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${office.coordinates.lat},${office.coordinates.lng}`;
+
+      // Service tags (show max 2 + "N more")
+      const services = office.services || [];
+      const maxShow = 2;
+      let servicesHTML = "";
+      services.slice(0, maxShow).forEach(s => {
+        servicesHTML += `<span class="off-card-tag">${s}</span>`;
+      });
+      if (services.length > maxShow) {
+        servicesHTML += `<span class="off-card-tag off-card-tag-more">+${services.length - maxShow} more</span>`;
+      }
+
+      const card = document.createElement("div");
+      card.className = "off-card";
+      card.innerHTML = `
+        <div class="off-card-header">
+          <span class="off-card-type-badge" style="background:${colors.bg};color:${colors.fg}">${office.type}</span>
+          <div class="off-card-initial" style="background:${colors.bg};color:${colors.fg}">${initials}</div>
+        </div>
+        <div class="off-card-body">
+          <h3 class="off-card-name">${office.name}</h3>
+          <p class="off-card-location">${office.city}, ${office.state}</p>
+          <div class="off-card-details">
+            <div class="off-card-detail">
+              <span class="off-detail-icon">📍</span>
+              <span>${office.address}</span>
+            </div>
+            <div class="off-card-detail">
+              <span class="off-detail-icon">📞</span>
+              <span>${office.phone || "N/A"}</span>
+            </div>
+            <div class="off-card-detail">
+              <span class="off-detail-icon">🕐</span>
+              <span>${office.working_hours}</span>
+            </div>
+          </div>
+          ${servicesHTML ? `<div class="off-card-tags">${servicesHTML}</div>` : ""}
+        </div>
+        <div class="off-card-footer">
+          <a href="office-detail.html?id=${office.id}" class="off-card-btn">View Details & Navigation →</a>
+        </div>`;
+
+      cardsGrid.appendChild(card);
+    });
+  }
+
+  function getInitials(name) {
+    // Remove common prefixes and get initials
+    const cleaned = name
+      .replace(/District |Regional |Head |Chief |Office|Passport |Seva |Kendra|Medical & Health /gi, "")
+      .replace(/[-–—]/g, " ")
+      .trim();
+    const words = cleaned.split(/\s+/).filter(w => w.length > 0);
+    if (words.length === 0) return "?";
+    if (words.length === 1) return words[0][0].toUpperCase();
+    return (words[0][0] + (words[1] ? words[1][0] : "")).toUpperCase();
+  }
+
+  function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suggest an Office – GOV Locator</title>
+  <meta name="description" content="Help us improve the GOV Locator directory by suggesting new government offices." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════ NAVBAR ════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">🏛️</span>
+      <span class="brand-text">GOV<span class="brand-accent">Locator</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="map.html" class="nav-link">Map</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <span class="tt-icon" id="themeIcon">☀️</span>
+    </button>
+    <a href="login.html" class="nav-cta">Login</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="map.html" onclick="closeMobile()">Map</a>
+    <a href="about.html" onclick="closeMobile()">About</a>
+    <a href="login.html" onclick="closeMobile()">Login</a>
+  </div>
+</header>
+
+<!-- ════════════════ SUGGEST FORM ════════════════ -->
+<section class="suggest-section">
+  <div class="container">
+    <div class="suggest-card">
+      <div class="suggest-header">
+        <div class="suggest-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <h1 class="suggest-title">Suggest a Government Office</h1>
+        <p class="suggest-desc">Know a government office that's not listed? Help us grow the directory by submitting its details below.</p>
+      </div>
+
+      <form class="suggest-form" id="suggestForm" onsubmit="handleSuggest(event)">
+        <!-- Office Name -->
+        <div class="sf-group">
+          <label class="sf-label" for="sfName">Office Name <span class="sf-req">*</span></label>
+          <input type="text" id="sfName" class="sf-input" placeholder="e.g. District Collector Office - Pune" required />
+        </div>
+
+        <!-- Office Type / Category -->
+        <div class="sf-row">
+          <div class="sf-group">
+            <label class="sf-label" for="sfType">Office Type <span class="sf-req">*</span></label>
+            <select id="sfType" class="sf-select" required>
+              <option value="">Select type…</option>
+              <option value="collectorate">District Collector</option>
+              <option value="tehsil">Tehsil / SDM</option>
+              <option value="rto">RTO</option>
+              <option value="municipal">Municipal Corporation</option>
+              <option value="police">Police Station</option>
+              <option value="passport">Passport Office</option>
+              <option value="court">Court</option>
+              <option value="incometax">Income Tax</option>
+              <option value="postoffice">Post Office</option>
+              <option value="health">Health Dept.</option>
+              <option value="electricity">Electricity Board</option>
+              <option value="land">Land Records</option>
+              <option value="labour">Labour Office</option>
+              <option value="food_supply">Food & Civil Supply</option>
+              <option value="block">Block Office</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="sf-group">
+            <label class="sf-label" for="sfCity">City <span class="sf-req">*</span></label>
+            <input type="text" id="sfCity" class="sf-input" placeholder="e.g. Pune" required />
+          </div>
+        </div>
+
+        <!-- State & Pincode -->
+        <div class="sf-row">
+          <div class="sf-group">
+            <label class="sf-label" for="sfState">State <span class="sf-req">*</span></label>
+            <input type="text" id="sfState" class="sf-input" placeholder="e.g. Maharashtra" required />
+          </div>
+          <div class="sf-group">
+            <label class="sf-label" for="sfPincode">Pincode</label>
+            <input type="text" id="sfPincode" class="sf-input" placeholder="e.g. 411001" pattern="\d{6}" />
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="sf-group">
+          <label class="sf-label" for="sfAddress">Full Address <span class="sf-req">*</span></label>
+          <textarea id="sfAddress" class="sf-textarea" rows="3" placeholder="Complete address with landmarks if possible" required></textarea>
+        </div>
+
+        <!-- Phone & Email -->
+        <div class="sf-row">
+          <div class="sf-group">
+            <label class="sf-label" for="sfPhone">Phone Number</label>
+            <input type="tel" id="sfPhone" class="sf-input" placeholder="e.g. 020-2612XXXX" />
+          </div>
+          <div class="sf-group">
+            <label class="sf-label" for="sfEmail">Office Email</label>
+            <input type="email" id="sfEmail" class="sf-input" placeholder="e.g. office@gov.in" />
+          </div>
+        </div>
+
+        <!-- Working Hours -->
+        <div class="sf-group">
+          <label class="sf-label" for="sfHours">Working Hours</label>
+          <input type="text" id="sfHours" class="sf-input" placeholder="e.g. Mon–Sat: 10:00 AM – 5:00 PM" />
+        </div>
+
+        <!-- Website -->
+        <div class="sf-group">
+          <label class="sf-label" for="sfWebsite">Website (if any)</label>
+          <input type="url" id="sfWebsite" class="sf-input" placeholder="https://..." />
+        </div>
+
+        <!-- Additional Info -->
+        <div class="sf-group">
+          <label class="sf-label" for="sfNotes">Additional Notes</label>
+          <textarea id="sfNotes" class="sf-textarea" rows="3" placeholder="Any extra information — services offered, landmarks, etc."></textarea>
+        </div>
+
+        <!-- Your Name & Contact -->
+        <div class="sf-divider">Your Contact (optional)</div>
+        <div class="sf-row">
+          <div class="sf-group">
+            <label class="sf-label" for="sfYourName">Your Name</label>
+            <input type="text" id="sfYourName" class="sf-input" placeholder="Your name" />
+          </div>
+          <div class="sf-group">
+            <label class="sf-label" for="sfYourEmail">Your Email</label>
+            <input type="email" id="sfYourEmail" class="sf-input" placeholder="your@email.com" />
+          </div>
+        </div>
+
+        <button type="submit" class="sf-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Submit Suggestion
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">🏛️ GOV<span>Locator</span></div>
+        <p>A Digital India initiative to help citizens find government offices quickly and easily.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="map.html">Find Offices</a>
+        <a href="about.html">About</a>
+        <a href="suggest.html">Suggest Office</a>
+      </div>
+      <div class="footer-links">
+        <h4>Office Types</h4>
+        <a href="map.html?cat=collectorate">District Collector</a>
+        <a href="map.html?cat=rto">RTO</a>
+        <a href="map.html?cat=passport">Passport Office</a>
+        <a href="map.html?cat=municipal">Municipal Corp.</a>
+      </div>
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+        <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GOV Locator. Made with ❤️ for Indian Citizens &middot; Digital India Initiative</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+<script>
+  function handleSuggest(e) {
+    e.preventDefault();
+    showToast('✅ Thank you! Your suggestion has been submitted.');
+    setTimeout(() => {
+      document.getElementById('suggestForm').reset();
+    }, 1500);
+  }
+</script>
+</body>
+</html>

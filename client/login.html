@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – GOV Locator</title>
+  <meta name="description" content="Sign in or create an account to access the full Government Office Directory." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-page">
+
+<!-- Back link -->
+<a href="index.html" class="auth-back">← Back to Home</a>
+
+<!-- Theme toggle (top-right) -->
+<button class="theme-toggle auth-theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+  <span class="tt-icon" id="themeIcon">☀️</span>
+</button>
+
+<main class="auth-wrapper">
+  <!-- Logo -->
+  <div class="auth-logo">
+    <span class="brand-icon" style="font-size:32px;">🏛️</span>
+    <div>
+      <div class="auth-logo-text">GOV<span>Locator</span></div>
+      <div class="auth-logo-sub">OFFICE DIRECTORY</div>
+    </div>
+  </div>
+
+  <!-- Auth Card -->
+  <div class="auth-card">
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign In</button>
+      <button class="auth-tab" id="tabCreate" onclick="switchTab('create')">Create Account</button>
+    </div>
+
+    <!-- Sign In Form -->
+    <form class="auth-form" id="formSignIn" onsubmit="handleSignIn(event)">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-subtitle">Sign in to access the full government office directory</p>
+
+      <label class="auth-label" for="loginEmail">Email Address</label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">✉️</span>
+        <input type="email" id="loginEmail" class="auth-input" placeholder="you@example.com" required autocomplete="email" />
+      </div>
+
+      <label class="auth-label" for="loginPass">Password</label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">🔒</span>
+        <input type="password" id="loginPass" class="auth-input" placeholder="••••••••" required autocomplete="current-password" />
+        <button type="button" class="auth-eye" onclick="togglePasswordVisibility('loginPass', this)" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="auth-forgot"><a href="#">Forgot password?</a></div>
+
+      <button type="submit" class="auth-submit">Sign In</button>
+
+      <div class="auth-divider"><span>or continue as</span></div>
+
+      <a href="index.html" class="auth-guest-btn">Browse as Guest</a>
+
+      <p class="auth-terms">
+        By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </p>
+    </form>
+
+    <!-- Create Account Form (hidden by default) -->
+    <form class="auth-form" id="formCreate" style="display:none;" onsubmit="handleCreate(event)">
+      <h2 class="auth-title">Create an account</h2>
+      <p class="auth-subtitle">Join GOVLocator for the best experience</p>
+
+      <label class="auth-label" for="createName">Full Name</label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">👤</span>
+        <input type="text" id="createName" class="auth-input" placeholder="Your full name" required autocomplete="name" />
+      </div>
+
+      <label class="auth-label" for="createEmail">Email Address</label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">✉️</span>
+        <input type="email" id="createEmail" class="auth-input" placeholder="you@example.com" required autocomplete="email" />
+      </div>
+
+      <label class="auth-label" for="createPass">Password</label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">🔒</span>
+        <input type="password" id="createPass" class="auth-input" placeholder="At least 8 characters" required minlength="8" autocomplete="new-password" />
+        <button type="button" class="auth-eye" onclick="togglePasswordVisibility('createPass', this)" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+
+      <label class="auth-label" for="createConfirm">Confirm Password</label>
+      <div class="auth-input-wrap">
+        <span class="auth-input-icon">🔒</span>
+        <input type="password" id="createConfirm" class="auth-input" placeholder="Repeat your password" required minlength="8" autocomplete="new-password" />
+      </div>
+
+      <button type="submit" class="auth-submit">Create Account</button>
+
+      <div class="auth-divider"><span>or continue as</span></div>
+
+      <a href="index.html" class="auth-guest-btn">Browse as Guest</a>
+
+      <p class="auth-terms">
+        By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </p>
+    </form>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+  // Tab switching
+  function switchTab(tab) {
+    const tabSign = document.getElementById('tabSignIn');
+    const tabCr   = document.getElementById('tabCreate');
+    const formSign= document.getElementById('formSignIn');
+    const formCr  = document.getElementById('formCreate');
+
+    if (tab === 'signin') {
+      tabSign.classList.add('active'); tabCr.classList.remove('active');
+      formSign.style.display = ''; formCr.style.display = 'none';
+    } else {
+      tabCr.classList.add('active'); tabSign.classList.remove('active');
+      formCr.style.display = ''; formSign.style.display = 'none';
+    }
+  }
+
+  // Toggle password visibility
+  function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+    } else {
+      input.type = 'password';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    }
+  }
+
+  // Form handlers (demo — no real backend auth)
+  function handleSignIn(e) {
+    e.preventDefault();
+    showToast('✅ Signed in successfully!');
+    setTimeout(() => window.location.href = 'index.html', 1200);
+  }
+  function handleCreate(e) {
+    e.preventDefault();
+    const pass = document.getElementById('createPass').value;
+    const conf = document.getElementById('createConfirm').value;
+    if (pass !== conf) { showToast('⚠️ Passwords do not match'); return; }
+    showToast('✅ Account created successfully!');
+    setTimeout(() => window.location.href = 'index.html', 1200);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Office Details – GOV Locator</title>
+  <meta name="description" content="Detailed information about a government office including location, services, working hours, and navigation." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHxy_LtS2Bi8JG16IfJ_s2cDTeTRtMFe8&libraries=places"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════ NAVBAR ════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">🏛️</span>
+      <span class="brand-text">GOV<span class="brand-accent">Locator</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="offices.html" class="nav-link">Offices</a>
+      <a href="map.html" class="nav-link">Map</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+      <span class="tt-icon" id="themeIcon">☀️</span>
+    </button>
+    <a href="login.html" class="nav-cta">Login</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="offices.html" onclick="closeMobile()">Offices</a>
+    <a href="map.html" onclick="closeMobile()">Map</a>
+    <a href="about.html" onclick="closeMobile()">About</a>
+    <a href="login.html" onclick="closeMobile()">Login</a>
+  </div>
+</header>
+
+<!-- ════════════════ BACK LINK ════════════════ -->
+<div class="od-back-bar">
+  <div class="container">
+    <a href="offices.html" class="od-back-link">← Back to Offices</a>
+  </div>
+</div>
+
+<!-- ════════════════ MAIN CONTENT ════════════════ -->
+<main class="od-page" id="odPage">
+  <div class="od-loading" id="odLoading">
+    <div class="loader-spinner large"></div>
+    <p>Loading office details…</p>
+  </div>
+</main>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">🏛️ GOV<span>Locator</span></div>
+        <p>A Digital India initiative to help citizens find government offices quickly and easily.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="offices.html">Browse Offices</a>
+        <a href="map.html">Map View</a>
+        <a href="about.html">About</a>
+        <a href="suggest.html">Suggest Office</a>
+      </div>
+      <div class="footer-links">
+        <h4>Office Types</h4>
+        <a href="offices.html?type=District Collector">District Collector</a>
+        <a href="offices.html?type=RTO">RTO</a>
+        <a href="offices.html?type=Passport Office">Passport Office</a>
+        <a href="offices.html?type=Municipal Corporation">Municipal Corp.</a>
+      </div>
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="https://india.gov.in" target="_blank" rel="noopener">India.gov.in</a>
+        <a href="https://digitalindia.gov.in" target="_blank" rel="noopener">Digital India</a>
+        <a href="https://umang.gov.in" target="_blank" rel="noopener">UMANG App</a>
+        <a href="https://parivahan.gov.in" target="_blank" rel="noopener">Parivahan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GOV Locator. Made with ❤️ for Indian Citizens &middot; Digital India Initiative</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+
+<script src="app.js"></script>
+<script>
+(function() {
+  "use strict";
+
+  const API_BASE = "/api";
+  const params = new URLSearchParams(window.location.search);
+  const officeId = parseInt(params.get("id"), 10);
+
+  const CAT_EMOJI = {
+    collectorate:"🏢", tehsil:"📋", rto:"🚗", municipal:"🏙️",
+    block:"🌾", police:"👮", passport:"🛂", court:"⚖️",
+    incometax:"💰", postoffice:"📮", labour:"👷", food_supply:"🥛",
+    electricity:"⚡", health:"🏥", land:"📜", default:"🏛️"
+  };
+
+  const TYPE_COLORS = {
+    "District Collector":    { bg:"#fff3e6", fg:"#d97706", accent:"#f97316", gradient:"linear-gradient(135deg,#f97316,#ea580c)" },
+    "Tehsil Office":         { bg:"#eef0ff", fg:"#4f5bed", accent:"#4f5bed", gradient:"linear-gradient(135deg,#6366f1,#4f46e5)" },
+    "RTO":                   { bg:"#e0f7fa", fg:"#0891b2", accent:"#06b6d4", gradient:"linear-gradient(135deg,#06b6d4,#0891b2)" },
+    "Municipal Corporation": { bg:"#e8f5e9", fg:"#16a34a", accent:"#22c55e", gradient:"linear-gradient(135deg,#22c55e,#16a34a)" },
+    "Block Office":          { bg:"#fef3c7", fg:"#ca8a04", accent:"#eab308", gradient:"linear-gradient(135deg,#eab308,#ca8a04)" },
+    "Police Station":        { bg:"#eef0ff", fg:"#4f5bed", accent:"#6366f1", gradient:"linear-gradient(135deg,#6366f1,#4338ca)" },
+    "Passport Office":       { bg:"#fce4ec", fg:"#e91e63", accent:"#ec4899", gradient:"linear-gradient(135deg,#ec4899,#db2777)" },
+    "Court":                 { bg:"#fce4ec", fg:"#be123c", accent:"#e11d48", gradient:"linear-gradient(135deg,#e11d48,#be123c)" },
+    "Income Tax":            { bg:"#fff3e6", fg:"#d97706", accent:"#f59e0b", gradient:"linear-gradient(135deg,#f59e0b,#d97706)" },
+    "Post Office":           { bg:"#fef3c7", fg:"#ca8a04", accent:"#eab308", gradient:"linear-gradient(135deg,#eab308,#ca8a04)" },
+    "Labour Office":         { bg:"#e0f7fa", fg:"#0891b2", accent:"#06b6d4", gradient:"linear-gradient(135deg,#06b6d4,#0891b2)" },
+    "Food & Civil Supplies": { bg:"#e8f5e9", fg:"#16a34a", accent:"#22c55e", gradient:"linear-gradient(135deg,#22c55e,#16a34a)" },
+    "Electricity Board":     { bg:"#fff3e6", fg:"#d97706", accent:"#f97316", gradient:"linear-gradient(135deg,#f97316,#ea580c)" },
+    "Health Department":     { bg:"#fce4ec", fg:"#e91e63", accent:"#e91e63", gradient:"linear-gradient(135deg,#e91e63,#c2185b)" },
+    "Land Records":          { bg:"#e8f5e9", fg:"#16a34a", accent:"#22c55e", gradient:"linear-gradient(135deg,#22c55e,#16a34a)" },
+  };
+  const DEFAULT_COLOR = { bg:"#eef0ff", fg:"#4f5bed", accent:"#4f5bed", gradient:"linear-gradient(135deg,#4f5bed,#4338ca)" };
+
+  // Helpful info per office type
+  const TYPE_DOCUMENTS = {
+    "District Collector": ["Aadhaar Card", "Ration Card", "Voter ID", "Photo", "Address Proof"],
+    "Tehsil Office": ["Aadhaar Card", "Land Documents", "Revenue Court Summons", "Application Form"],
+    "RTO": ["Aadhaar Card", "Address Proof", "Medical Certificate", "Learner's Licence", "Vehicle RC"],
+    "Municipal Corporation": ["Property Tax Receipt", "ID Proof", "Birth/Death Application Form", "Building Plan"],
+    "Block Office": ["Aadhaar Card", "BPL Card", "Job Card (MGNREGA)", "Bank Passbook"],
+    "Police Station": ["Aadhaar Card", "FIR Copy", "Passport Application", "Address Proof"],
+    "Passport Office": ["Aadhaar Card", "PAN Card", "Voter ID", "Birth Certificate", "Address Proof"],
+    "Court": ["Case Number", "Vakalatnama", "ID Proof", "Court Fee Stamps"],
+    "Income Tax": ["PAN Card", "Aadhaar Card", "Form 16", "Bank Statements", "ITR Acknowledgment"],
+    "Post Office": ["Aadhaar Card", "Account Opening Form", "KYC Documents"],
+    "Labour Office": ["Aadhaar Card", "Labour Card", "Employment Proof", "Bank Details"],
+    "Food & Civil Supplies": ["Aadhaar Card", "Ration Card", "Income Certificate", "Address Proof"],
+    "Electricity Board": ["ID Proof", "Address Proof", "Previous Bill", "Application Form"],
+    "Health Department": ["Aadhaar Card", "Hospital Records", "Application Form"],
+    "Land Records": ["Aadhaar Card", "Khasra Number", "Previous Land Documents", "Revenue Receipt"],
+  };
+
+  const TYPE_TIPS = {
+    "District Collector": "Arrive early (before 10:30 AM) for token. Carry 2 passport-size photos. Lunch break: 1:00–2:00 PM.",
+    "Tehsil Office": "Check Samagra Portal for online applications first. Mutation cases may require court date.",
+    "RTO": "Book slot on Parivahan portal before visiting. Carry original + 2 photocopies of all documents.",
+    "Municipal Corporation": "Property tax can be paid online. Birth/Death certificates take 7–15 days for issuance.",
+    "Block Office": "MGNREGA job card holders should carry bank passbook. Visit on panchayat meeting days for faster service.",
+    "Police Station": "For passport verification, keep appointment letter. FIR can also be filed online via state police portal.",
+    "Passport Office": "Appointment mandatory via passportindia.gov.in. Tatkal applications processed same day typically by 3:00 PM.",
+    "Court": "Check case status on ecourts.gov.in before visit. Carry court fee stamps purchased from authorized vendor.",
+    "Income Tax": "Most services available on incometaxindiaefiling.gov.in. PAN corrections can be done online.",
+    "Post Office": "Savings account services available 10 AM–3 PM only. Speed Post tracking on indiapost.gov.in.",
+    "Labour Office": "Register online at state labour portal first. ESI/PF complaints can be filed online.",
+    "Food & Civil Supplies": "New ration card applications accepted online in most states. Check eligibility on state portal.",
+    "Electricity Board": "New connections can be applied online. Carry load calculation document for commercial connections.",
+    "Health Department": "Birth/Death certificates now available through e-Nagarpalika in many cities.",
+    "Land Records": "Check Bhulekh/Bhu-Abhilekh portal for online records before visiting.",
+  };
+
+  if (!officeId) {
+    showError("No office ID specified. Please go back and select an office.");
+    return;
+  }
+
+  loadOffice();
+
+  async function loadOffice() {
+    try {
+      const res = await fetch(`${API_BASE}/offices/${officeId}`);
+      const data = await res.json();
+      if (data.success) {
+        renderDetail(data.data);
+      } else {
+        showError("Office not found.");
+      }
+    } catch {
+      showError("Could not load office data. Server may be offline.");
+    }
+  }
+
+  function showError(msg) {
+    const page = document.getElementById("odPage");
+    page.innerHTML = `
+      <div class="od-error">
+        <div class="od-error-icon">😕</div>
+        <h2>Oops!</h2>
+        <p>${msg}</p>
+        <a href="offices.html" class="od-error-btn">← Browse Offices</a>
+      </div>`;
+  }
+
+  function renderDetail(office) {
+    const page = document.getElementById("odPage");
+    const colors = TYPE_COLORS[office.type] || DEFAULT_COLOR;
+    const emoji = CAT_EMOJI[office.category] || CAT_EMOJI.default;
+    const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${office.coordinates.lat},${office.coordinates.lng}`;
+    const docs = TYPE_DOCUMENTS[office.type] || ["Aadhaar Card", "ID Proof"];
+    const tip = TYPE_TIPS[office.type] || "Carry original documents with photocopies. Arrive before lunch break.";
+
+    const servicesHTML = (office.services || []).map(s =>
+      `<span class="od-service-tag">${s}</span>`
+    ).join("");
+
+    const docsHTML = docs.map(d =>
+      `<li><span class="od-doc-bullet">•</span> ${d}</li>`
+    ).join("");
+
+    document.title = `${office.name} – GOV Locator`;
+
+    page.innerHTML = `
+      <!-- HERO BANNER -->
+      <section class="od-hero" style="background:${colors.gradient}">
+        <div class="od-hero-pattern"></div>
+        <div class="container od-hero-inner">
+          <span class="od-hero-badge" style="background:rgba(255,255,255,0.2)">${office.type}</span>
+          <h1 class="od-hero-title">${office.name}</h1>
+          <div class="od-hero-meta">
+            <span class="od-hero-loc">📍 ${office.city}, ${office.state}</span>
+            <span class="od-hero-pin">${office.pincode}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTENT GRID -->
+      <section class="od-content">
+        <div class="container">
+          <div class="od-grid">
+
+            <!-- LEFT: INFO -->
+            <div class="od-info-col">
+
+              <!-- Quick Actions -->
+              <div class="od-actions-row">
+                <a href="${navUrl}" target="_blank" rel="noopener" class="od-action-btn od-action-primary">
+                  🗺️ Get Directions
+                </a>
+                ${office.phone ? `<a href="tel:${office.phone.replace(/[^0-9+]/g,'')}" class="od-action-btn od-action-outline">📞 Call Now</a>` : ""}
+                ${office.website ? `<a href="${office.website}" target="_blank" rel="noopener" class="od-action-btn od-action-outline">🌐 Website</a>` : ""}
+              </div>
+
+              <!-- Address Card -->
+              <div class="od-info-card">
+                <h3 class="od-card-title">📍 Address</h3>
+                <p class="od-card-text">${office.address}</p>
+                ${office.landmark ? `<p class="od-card-sub">🗺️ Landmark: <strong>${office.landmark}</strong></p>` : ""}
+              </div>
+
+              <!-- Contact Card -->
+              <div class="od-info-card">
+                <h3 class="od-card-title">📞 Contact</h3>
+                <div class="od-contact-grid">
+                  ${office.phone ? `<div class="od-contact-item"><span class="od-ci-label">Phone</span><span class="od-ci-value">${office.phone}</span></div>` : ""}
+                  ${office.email ? `<div class="od-contact-item"><span class="od-ci-label">Email</span><span class="od-ci-value">${office.email}</span></div>` : ""}
+                </div>
+              </div>
+
+              <!-- Working Hours Card -->
+              <div class="od-info-card">
+                <h3 class="od-card-title">🕐 Working Hours</h3>
+                <div class="od-hours-row">
+                  <span class="od-hours-open">✅ ${office.working_hours}</span>
+                </div>
+                <p class="od-hours-closed">🔴 Closed: ${office.closed_on}</p>
+              </div>
+
+              <!-- Tip Card -->
+              <div class="od-tip-card">
+                <div class="od-tip-icon">💡</div>
+                <div>
+                  <h4 class="od-tip-title">Visitor Tip</h4>
+                  <p class="od-tip-text">${tip}</p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT: MAP + SERVICES -->
+            <div class="od-map-col">
+
+              <!-- Map -->
+              <div class="od-map-card">
+                <div id="odMap" class="od-map-embed"></div>
+              </div>
+
+              <!-- Services Offered -->
+              <div class="od-info-card">
+                <h3 class="od-card-title">🏷️ Services Offered</h3>
+                <div class="od-services-wrap">
+                  ${servicesHTML || '<p class="od-no-data">No service data available.</p>'}
+                </div>
+              </div>
+
+              <!-- Required Documents -->
+              <div class="od-info-card">
+                <h3 class="od-card-title">📄 Commonly Required Documents</h3>
+                <ul class="od-doc-list">
+                  ${docsHTML}
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>`;
+
+    // Init Google Map
+    setTimeout(() => {
+      const position = { lat: office.coordinates.lat, lng: office.coordinates.lng };
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      const mapOptions = {
+        zoom: 15,
+        center: position,
+        mapTypeId: "roadmap",
+        disableDefaultUI: true,
+        zoomControl: true,
+        styles: isLight ? LIGHT_MAP_STYLES : DARK_MAP_STYLES,
+      };
+      const map = new google.maps.Map(document.getElementById("odMap"), mapOptions);
+      window.odMapInstance = map;
+      
+      const infoWindow = new google.maps.InfoWindow({
+        content: `<strong>${office.name}</strong><br>${office.address}`
+      });
+
+      const marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title: office.name
+      });
+      
+      marker.addListener("click", () => {
+        infoWindow.open({
+          anchor: marker,
+          map,
+        });
+      });
+      infoWindow.open({ anchor: marker, map });
+    }, 100);
+  }
+})();
+</script>
+</body>
+</html>
